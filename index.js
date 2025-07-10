@@ -4,6 +4,7 @@ const db = require("./src/models");
 const userRoutes = require("./src/routes/user.routes");
 const categoryRoutes = require("./src/routes/category.routes");
 const placeRoutes = require("./src/routes/place.routes");
+const ticketRoutes = require("./src/routes/ticket.routes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/places", placeRoutes);
+app.use("/api/tickets", ticketRoutes);
 
 // Cek koneksi database
 (async () => {
