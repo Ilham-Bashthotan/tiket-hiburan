@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const db = require("./src/models");
 const userRoutes = require("./src/routes/user.routes");
+const categoryRoutes = require("./src/routes/category.routes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
 
 // Gunakan hanya user route
 app.use("/api/users", userRoutes);
+app.use("/api/categories", categoryRoutes); // tambahkan ini
 
 // Cek koneksi database
 (async () => {
