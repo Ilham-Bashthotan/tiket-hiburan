@@ -3,6 +3,7 @@ const express = require("express");
 const db = require("./src/models");
 const userRoutes = require("./src/routes/user.routes");
 const categoryRoutes = require("./src/routes/category.routes");
+const placeRoutes = require("./src/routes/place.routes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,9 +15,10 @@ app.get("/", (req, res) => {
 	res.json({ message: "Selamat datang di API User Tiket Rekreasi" });
 });
 
-// Gunakan hanya user route
+
 app.use("/api/users", userRoutes);
-app.use("/api/categories", categoryRoutes); // tambahkan ini
+app.use("/api/categories", categoryRoutes);
+app.use("/api/places", placeRoutes);
 
 // Cek koneksi database
 (async () => {
