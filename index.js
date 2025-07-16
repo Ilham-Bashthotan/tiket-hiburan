@@ -7,6 +7,7 @@ const categoryRoutes = require("./src/routes/category.routes");
 const placeRoutes = require("./src/routes/place.routes");
 const ticketRoutes = require("./src/routes/ticket.routes");
 const orderRoutes = require("./src/routes/order.routes");
+const authRoutes = require("./src/routes/auth.routes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 	res.json({ message: "Selamat datang di API User Tiket Rekreasi" });
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/places", placeRoutes);
