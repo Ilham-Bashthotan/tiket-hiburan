@@ -16,8 +16,18 @@ router.get(
 	rbac(["admin", "user"]),
 	OrderController.getById
 );
-router.post("/", authenticateToken, rbac(["admin"]), OrderController.create);
-router.put("/:id", authenticateToken, rbac(["admin"]), OrderController.update);
+router.post(
+	"/",
+	authenticateToken,
+	rbac(["admin", "user"]),
+	OrderController.create
+);
+router.put(
+	"/:id",
+	authenticateToken,
+	rbac(["admin", "user"]),
+	OrderController.update
+);
 router.delete(
 	"/:id",
 	authenticateToken,
