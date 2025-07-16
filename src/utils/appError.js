@@ -1,8 +1,11 @@
 class AppError extends Error {
-	constructor(message, statusCode, isOperational = true) {
+	constructor(message, statusCode) {
 		super(message);
-		this.statusCode = statusCode || 500;
-		this.isOperational = isOperational;
+
+		this.statusCode = statusCode;
+		this.status = String(statusCode).startsWith("4") ? "fail" : "error";
+		this.isOperational = true; // Menandai ini sebagai kesalahan operasional
+
 		Error.captureStackTrace(this, this.constructor);
 	}
 }

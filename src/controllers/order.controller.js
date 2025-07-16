@@ -1,4 +1,5 @@
 const OrderService = require("../services/order.service");
+const AppError = require("../utils/appError");
 
 class OrderController {
 	static async getAll(req, res, next) {
@@ -6,36 +7,17 @@ class OrderController {
 			const orders = await OrderService.getAll();
 			res.json(orders);
 		} catch (err) {
-			next(
-				new (require("../utils/appError"))(
-					"Terjadi kesalahan server",
-					500,
-					false
-				)
-			);
+			next(err);
 		}
 	}
 
 	static async getById(req, res, next) {
 		try {
 			const order = await OrderService.getById(req.params.id);
-			if (!order)
-				return next(
-					new (require("../utils/appError"))(
-						"Order not found",
-						404,
-						true
-					)
-				);
+			if (!order) return next(new AppError("Order not found", 404));
 			res.json(order);
 		} catch (err) {
-			next(
-				new (require("../utils/appError"))(
-					"Terjadi kesalahan server",
-					500,
-					false
-				)
-			);
+			next(err);
 		}
 	}
 
@@ -44,59 +26,27 @@ class OrderController {
 			const order = await OrderService.create(req.body);
 			res.status(201).json(order);
 		} catch (err) {
-			next(
-				new (require("../utils/appError"))(
-					"Terjadi kesalahan server",
-					500,
-					false
-				)
-			);
+			next(err);
 		}
 	}
 
 	static async update(req, res, next) {
 		try {
 			const order = await OrderService.update(req.params.id, req.body);
-			if (!order)
-				return next(
-					new (require("../utils/appError"))(
-						"Order not found",
-						404,
-						true
-					)
-				);
+			if (!order) return next(new AppError("Order not found", 404));
 			res.json(order);
 		} catch (err) {
-			next(
-				new (require("../utils/appError"))(
-					"Terjadi kesalahan server",
-					500,
-					false
-				)
-			);
+			next(err);
 		}
 	}
 
 	static async delete(req, res, next) {
 		try {
 			const order = await OrderService.delete(req.params.id);
-			if (!order)
-				return next(
-					new (require("../utils/appError"))(
-						"Order not found",
-						404,
-						true
-					)
-				);
+			if (!order) return next(new AppError("Order not found", 404));
 			res.json({ message: "Order deleted" });
 		} catch (err) {
-			next(
-				new (require("../utils/appError"))(
-					"Terjadi kesalahan server",
-					500,
-					false
-				)
-			);
+			next(err);
 		}
 	}
 }
