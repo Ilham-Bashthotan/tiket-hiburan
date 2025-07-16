@@ -353,7 +353,7 @@ exports.updateUser = async (id, updateData) => {
 };
 ```
 
-Menghapus Pengguna (Delete)
+## Menghapus Pengguna (Delete)
 
 Router: 
 

@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const morgan = require("morgan");
 const db = require("./src/models");
 const userRoutes = require("./src/routes/user.routes");
 const categoryRoutes = require("./src/routes/category.routes");
@@ -10,13 +11,13 @@ const orderRoutes = require("./src/routes/order.routes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
 	res.json({ message: "Selamat datang di API User Tiket Rekreasi" });
 });
-
 
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
