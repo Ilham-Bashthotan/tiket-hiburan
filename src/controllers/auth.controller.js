@@ -1,39 +1,38 @@
 const AuthService = require("../services/auth.service");
+const AppError = require("../utils/appError");
 
 class AuthController {
-	static async login(req, res) {
+	static async login(req, res, next) {
 		try {
 			const { email, password } = req.body;
 			const result = await AuthService.login(email, password);
 			if (!result) {
-				return res
-					.status(401)
-					.json({ message: "Email atau password salah" });
+				// Operasional error: autentikasi gagal
+				return next(
+					new AppError("Email atau password salah", 401, true)
+				);
 			}
 			res.json(result);
 		} catch (err) {
-			res.status(500).json({
-				message: "Terjadi kesalahan server",
-				error: err.message,
-			});
+			// Programmer error: bug, error tak terduga
+			next(new AppError("Terjadi kesalahan server", 500, false));
 		}
 	}
-	static async register(req, res) {
+	static async register(req, res, next) {
 		try {
 			const userData = req.body;
 			const result = await AuthService.register(userData);
 			if (!result.success) {
-				return res.status(400).json({ message: result.message });
+				// Operasional error: input tidak valid/email sudah terdaftar
+				return next(new AppError(result.message, 400, true));
 			}
 			res.status(201).json({
 				message: "Registrasi berhasil",
 				user: result.user,
 			});
 		} catch (err) {
-			res.status(500).json({
-				message: "Terjadi kesalahan server",
-				error: err.message,
-			});
+			// Programmer error: bug, error tak terduga
+			next(new AppError("Terjadi kesalahan server", 500, false));
 		}
 	}
 }
