@@ -16,6 +16,18 @@ class AuthController {
 			next(err);
 		}
 	}
+	static async refresh(req, res, next) {
+		try {
+			const { refreshToken } = req.body;
+			const result = await AuthService.refreshToken(refreshToken);
+			if (!result.success) {
+				return next(new AppError(result.message, 401));
+			}
+			res.json({ accessToken: result.accessToken });
+		} catch (err) {
+			next(err);
+		}
+	}
 	static async register(req, res, next) {
 		try {
 			const userData = req.body;

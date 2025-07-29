@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 				defaultValue: "user",
 			},
+			refreshToken: DataTypes.TEXT,
 		},
 		{
 			sequelize,

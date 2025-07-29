@@ -19,6 +19,7 @@ router.post(
 	validateRequest(loginSchema),
 	AuthController.login
 );
+router.post("/refresh", AuthController.refresh);
 router.post(
 	"/register",
 	authLimiter,
